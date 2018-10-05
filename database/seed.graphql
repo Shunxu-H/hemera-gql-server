@@ -1,0 +1,10 @@
+mutation {
+  createUser(data: {
+    email: "admin@hemera.life"
+    password: "$2a$10$CISkY9u/SgLxuiTrbtNjyOsOj7VLUdtKFM6dhGlsMC3PQtG3ks4eO" # plaintext password: "nooneknows"
+    name: "Hemera Admin"
+    role: "ADMIN"
+  }) {
+    id
+  }
+}

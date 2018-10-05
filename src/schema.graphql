@@ -1,0 +1,51 @@
+# import TaskNode from "./generated/prisma.graphql"
+
+type Query {
+    users: [User!]!
+    user(id: ID!): User!
+    userById(id: ID!): User!
+    userByEmail(email: String): User!
+
+    taskNodes: [TaskNode!]!
+    taskNode(id: ID!): TaskNode 
+    me: User
+}
+
+
+type Mutation {
+    signup(email: String!, password: String!, name: String!): AuthPayload!
+    login(email: String!, password: String!): AuthPayload!
+    createTaskNode(parentId: ID, content: String!, children: [ID!]!): TaskNode!
+    updateTaskNode(id:ID!, isComplete:Boolean!, content:String!, parentId: ID, children:[ID!]!): TaskNode!
+    deleteTaskNode(id:ID!): TaskNode
+
+    deleteUser(email: String!): User
+    updateUserRole(email: String!, newRole: Role): User
+}
+
+# type Subscription {
+    
+# }
+
+type AuthPayload {
+    token: String!
+    user: User!
+}
+
+
+
+
+directive @auth(
+    requires: Role = ADMIN,
+) on OBJECT | FIELD_DEFINITION
+
+type User @auth(requires: USER) {
+    id: ID!
+    email: String! 
+    name: String!
+    role: Role! 
+
+    # access control 
+    # banned: Boolean @auth(requires: ADMIN)
+}
+

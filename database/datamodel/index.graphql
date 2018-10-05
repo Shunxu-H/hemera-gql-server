@@ -1,0 +1,26 @@
+# import User from './auth.graphql' 
+
+
+enum PermissionEnum {
+    READ
+    WRITE
+    READWRITE
+}
+
+type Accessor {
+    user: User!
+    permission: PermissionEnum!
+}
+
+type TaskNode {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    parentId: ID
+    isComplete: Boolean!
+    content: String!
+    children: [ID!]!
+    owner: ID!
+    # accessor: [Accessor!]!
+
+}

@@ -1,0 +1,26 @@
+
+directive @auth(
+    requires: Role = ADMIN,
+) on OBJECT | FIELD_DEFINITION
+
+type Admin @auth {
+    id: ID! @unique
+}
+
+enum Role {
+    ADMIN
+    USER
+    UNKNOWN
+}
+
+type User @auth(requires: USER) {
+    id: ID! @unique
+    email: String! @unique
+    password: String! 
+    name: String!
+    role: Role!
+
+    # access control 
+    # banned: Boolean @auth(requires: ADMIN)
+    # posts: [Post!]!
+}
